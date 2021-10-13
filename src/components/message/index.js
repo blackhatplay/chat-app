@@ -3,12 +3,11 @@ import { io } from 'socket.io-client';
 import { set, get, update } from 'idb-keyval';
 import { Avatar, ChatBox, Input, MessageWrapper, TextMessage } from './styles';
 
-const socket = io('ws://localhost:5000', {
+const socket = io('ws://localhost:4000', {
    reconnectionDelayMax: 10000,
-});
-
-socket.on('connect', () => {
-   console.log(socket.id);
+   query: {
+      id: localStorage.getItem('id'),
+   },
 });
 
 let id = 100;
@@ -18,8 +17,6 @@ const Message = () => {
    const [input, setInput] = useState([]);
 
    useEffect(() => {
-      socket.emit('join', localStorage.getItem('id'));
-
       get(localStorage.getItem('to')).then((val) => {
          if (val) setMessages(val);
       });

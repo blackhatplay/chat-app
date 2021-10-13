@@ -1,20 +1,17 @@
 import styled, { createGlobalStyle } from 'styled-components';
 
-// light: #f6fbf6;
-// primary-light: #b2ee8f;
-// primary: #65d970;
-// primary-dark: #b4ceb6;
-// secondary-light: #0cae29;
-// dark: #693f53;
-// secondary: #55b3d8;
-
 export const theme = {
    colors: {
-      primary: '#65d970',
-      primaryDark: '#b4ceb6',
-      secondary: '#55b3d8',
-      background: '#f6fbf6',
-      dark: '#693f53',
+      primary: '#3445FF',
+      primaryDark: '#D651FF',
+      secondary: '#3444FE',
+      background: '#ffffff',
+      backgroundLight: '#F3F4F7',
+      dark: '#212121',
+      text: '#334756',
+      light: '#F3F4F5',
+      textSecondary: '#777',
+      shadow: '#ccc',
    },
 };
 
@@ -24,7 +21,6 @@ export const GlobalStyle = createGlobalStyle`
         padding: 0;
         scroll-behavior: smooth;
         box-sizing: border-box;
-
     }
     
   body {
@@ -32,6 +28,7 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
     background-color: ${({ theme }) => theme.colors.background};
     font-family: 'Roboto Mono', monospace;
+    color: ${({ theme }) => theme.colors.text};
   }
 
   a {
