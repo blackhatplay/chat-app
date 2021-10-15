@@ -52,5 +52,23 @@ export const Search = styled.div`
 
 export const StoryList = styled.div`
    display: flex;
+   flex-wrap: nowrap;
+   overflow-x: auto;
    gap: 1rem;
+   padding: 0.5rem;
+
+   -webkit-overflow-scrolling: touch;
+
+   &::-webkit-scrollbar {
+      display: none;
+   }
+`;
+
+export const MainChatWrapper = styled.div`
+   background-color: ${({ theme }) => theme.colors.light};
+`;
+
+export const MainChat = styled.div`
+   background-color: ${({ theme }) => theme.colors.background};
+   border-top-right-radius: 25px;
 `;

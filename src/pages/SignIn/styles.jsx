@@ -62,7 +62,7 @@ export const Card = styled.div`
          padding: 1rem;
          border-radius: 50px;
          background: ${({ theme }) => theme.colors.dark};
-         color: ${({ theme }) => theme.colors.textSecondary};
+         color: ${({ theme }) => theme.colors.light};
       }
 
       .link {

@@ -1,11 +1,10 @@
 import { ThemeProvider } from 'styled-components';
-import Message from './components/Message';
-import Home from './pages/Home';
 import SignIn from './pages/SignIn';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import { Container, GlobalStyle, theme } from './theme';
+import { GlobalStyle, theme } from './theme';
+import ChatBox from './components/ChatBox';
 
 function App() {
    return (
@@ -15,17 +14,15 @@ function App() {
          <Router>
             <Switch>
                <Route exact path="/">
-                  <SignIn />
+                  {/* <Home /> */}
+
+                  <ChatBox />
                </Route>
                <Route exact path="/signin">
-                  <Home />
+                  <SignIn />
                </Route>
             </Switch>
          </Router>
-
-         {/* <Container>
-            <Message />
-         </Container> */}
       </ThemeProvider>
    );
 }
