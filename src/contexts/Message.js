@@ -1,19 +1,17 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import PouchDB from 'pouchdb';
-import { useEffect } from 'react/cjs/react.development';
 import PouchDBFind from 'pouchdb-find';
 import { v4 as uuidv4 } from 'uuid';
 import { io } from 'socket.io-client';
 import { MESSAGE_TYPE } from '../constants';
 import { RecentContactsContext } from './RecentContacts';
-// import './importdata';
 
 PouchDB.plugin(PouchDBFind);
 
 const messageDB = new PouchDB('messageDB');
 const outgoingDB = new PouchDB('outgoingDB');
 
-const socket = io('ws://localhost:4000', {
+const socket = io(process.env.REACT_APP_SOCKET_ENDPOINT, {
    reconnectionDelayMax: 10000,
    query: {
       auth: localStorage.getItem('accessToken'),
