@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import { Header, HeaderContainer, HomeContainer, MainChat, MainChatWrapper, Search, StoryList } from './styles';
 
 import { FiSearch } from 'react-icons/fi';
@@ -8,7 +8,6 @@ import { RecentContactsContext } from '../../contexts/RecentContacts';
 import { MessageContext } from '../../contexts/Message';
 import ChatBox from '../../components/ChatBox';
 import { useHistory } from 'react-router';
-import { useEffect } from 'react/cjs/react.development';
 
 const Home = () => {
    const { recentContacts } = useContext(RecentContactsContext);
