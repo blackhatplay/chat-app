@@ -37,7 +37,7 @@ export const ChatArea = styled.div`
    padding-top: 1rem;
 
    display: flex;
-   flex-direction: column;
+   flex-direction: column-reverse;
    overflow-y: auto;
 
    &::-webkit-scrollbar {
@@ -101,6 +101,15 @@ export const MessageRight = styled.div`
       border-right: 15px solid transparent;
       bottom: 0;
       right: -15px;
+   }
+
+   span {
+      position: absolute;
+      font-size: 0.8rem;
+      color: ${({ theme }) => theme.colors.textSecondary};
+      right: 0;
+      padding: 0.5rem;
+      z-index: 1;
    }
 `;
 

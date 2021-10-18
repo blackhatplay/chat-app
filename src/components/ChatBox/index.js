@@ -1,5 +1,4 @@
-import React from 'react';
-import { io } from 'socket.io-client';
+import React, { useContext, useEffect, useState } from 'react';
 import {
    ChatArea,
    ChatAreaWrapper,
@@ -12,78 +11,33 @@ import {
    MessageRight,
 } from './styles';
 import { IoMdSend } from 'react-icons/io';
+import { MessageContext } from '../../contexts/Message';
+import { MESSAGE_TYPE } from '../../constants';
+const ChatBox = ({ match }) => {
+   const { messages, selectedChat, setSelectedChat, sendMessage, outgoingMessages } = useContext(MessageContext);
+   const [input, setInput] = useState('');
+   const onMessage = (event) => {
+      event.preventDefault();
 
-const socket = io('ws://localhost:4000', {
-   reconnectionDelayMax: 10000,
-   query: {
-      id: localStorage.getItem('id'),
-   },
-});
+      if (input) {
+         const newMessage = {
+            text: input,
+            chatID: selectedChat,
+         };
 
-export const MESSAGE_TYPE = {
-   message: 'MESSAGE',
-   reply: 'REPLY',
-};
+         sendMessage(newMessage);
+         setInput('');
+      }
+   };
 
-const MESSAGES = [
-   {
-      text: 'Hey from message.',
-      type: MESSAGE_TYPE.message,
-      id: 'ae5936a1-83f1-4e1b-91bf-5dd545220bb7',
-   },
-   {
-      text: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas excepturi odio in aliquid aspernatur facilis dolor consequatur doloribus tempora recusandae?',
-      type: MESSAGE_TYPE.reply,
-      id: 'f945c449-4610-4924-9379-72555d498a1b',
-   },
-   {
-      text: 'Hey how are you doing.',
-      type: MESSAGE_TYPE.message,
-      id: 'a082add6-4a5e-4a33-a7f0-303e91bac507',
-   },
-   {
-      text: 'Hey how are you doing.',
-      type: MESSAGE_TYPE.message,
-      id: '52ef6f86-433b-41c8-8f81-4b1ac4dd2b70',
-   },
-   {
-      text: 'Hey how are you doing. reply',
-      type: MESSAGE_TYPE.reply,
-      id: 'b40205ad-e7a6-4f23-9f3b-1fd06f8a2996',
-   },
-   {
-      text: 'Hey how are you doing. message',
-      type: MESSAGE_TYPE.message,
-      id: '836a98d7-a364-427c-9b1e-94bfadd65d83',
-   },
-   {
-      text: 'Hey how are you doing. message 2',
-      type: MESSAGE_TYPE.message,
-      id: '5940d1f7-708d-4a0e-bd15-860e4fb46cfd',
-   },
-   {
-      text: 'Hey how are you doing. message 2',
-      type: MESSAGE_TYPE.message,
-      id: 'fd58ddf0-7ac1-4753-97fd-6e2c44987762',
-   },
-   {
-      text: 'Hey how are you doing. message 2',
-      type: MESSAGE_TYPE.message,
-      id: '1733d6ae-c6c5-464a-ad62-866d1bebb723',
-   },
-   {
-      text: 'Hey how are you doing. message 2',
-      type: MESSAGE_TYPE.message,
-      id: '0eaf6d52-3962-4847-9973-4916ab186e5c',
-   },
-   {
-      text: 'Hey how are you doing. message 2 ajhdfj aljdfkhaljksdhf ljkashdfkjahs dflkjashdfjkashdfjkhasljkf',
-      type: MESSAGE_TYPE.message,
-      id: '62483b8b-3654-4c4e-96e2-b88e275274cb',
-   },
-];
+   const onInputChange = (e) => {
+      setInput(e.target.value);
+   };
 
-const ChatBox = () => {
+   useEffect(() => {
+      if (match.params.chatID) setSelectedChat(match.params.chatID);
+   }, [match.params]);
+
    return (
       <ChatBoxWrapper>
          <ChatBoxHeaderWrapper>
@@ -96,8 +50,8 @@ const ChatBox = () => {
             </ChatBoxHeader>
          </ChatBoxHeaderWrapper>
          <ChatAreaWrapper>
-            <ChatArea>
-               {MESSAGES.map((message) =>
+            <ChatArea id="pp">
+               {messages.map((message) =>
                   message.type === MESSAGE_TYPE.reply ? (
                      <Message key={message.id} type={message.type}>
                         <p>{message.text}</p>
@@ -107,11 +61,13 @@ const ChatBox = () => {
                      <MessageRight key={message.id} type={message.type}>
                         <p>{message.text}</p>
                         <small>13:37</small>
+                        {outgoingMessages[message.id] && <span>sending</span>}
                      </MessageRight>
                   ),
                )}
-               <InputArea>
-                  <Input placeholder="Message" />
+
+               <InputArea onSubmit={onMessage}>
+                  <Input placeholder="Message" value={input} onChange={onInputChange} />
                   <button>
                      <IoMdSend />
                   </button>

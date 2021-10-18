@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router';
+import server from '../../api/server';
 import { Card, InnerWrapper, SignInWrapper } from './styles';
 import Verification from './Verification';
 
@@ -6,10 +8,29 @@ const SignIn = () => {
    const [mobile, setMobile] = useState('');
    const [verificationScreen, setVerificationScreen] = useState(false);
 
-   const handleSubmit = (e) => {
+   const history = useHistory();
+   const token = localStorage.getItem('accessToken');
+
+   if (token) {
+      history.push('/');
+   }
+
+   const handleSubmit = async (e) => {
       e.preventDefault();
 
-      setVerificationScreen(true);
+      try {
+         if (mobile) {
+            const res = await server.post('/signin', {
+               mobile,
+            });
+
+            localStorage.setItem('otpToken', res.data.token);
+
+            setVerificationScreen(true);
+         }
+      } catch (error) {
+         console.log(error);
+      }
    };
 
    const handleChange = (e) => {

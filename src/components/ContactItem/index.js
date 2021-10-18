@@ -1,9 +1,9 @@
 import React from 'react';
 import { ChatInfo, ContactWrapper } from './styles';
 
-const ContactItem = ({ icon, name, lastMsg, unreadCount }) => {
+const ContactItem = ({ icon, name, lastMsg, unreadCount, onClick, id }) => {
    return (
-      <ContactWrapper className="ripple">
+      <ContactWrapper className="ripple" onClick={() => onClick(id)}>
          <img src={icon} alt="" />
          <ChatInfo>
             <div>

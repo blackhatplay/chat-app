@@ -1,5 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router';
+import server from '../../api/server';
 import { Card, Otp } from './styles';
 
 const otpInputArr = ['field1', 'field2', 'field3', 'field4'];
@@ -13,6 +14,7 @@ const Verification = ({ mobile }) => {
       field3: '',
       field4: '',
    });
+
    const field1 = useRef();
    const field2 = useRef();
    const field3 = useRef();
@@ -24,6 +26,31 @@ const Verification = ({ mobile }) => {
       field3,
       field4,
    };
+
+   useEffect(() => {
+      const otpString = Object.keys(otp).reduce((otpString, currentField) => otpString + otp[currentField], '');
+
+      if (otpString.length === otpInputArr.length) {
+         server
+            .post(
+               '/verify',
+               {
+                  otp: otpString,
+               },
+               {
+                  headers: {
+                     Authorization: `Bearer ${localStorage.getItem('otpToken')}`,
+                  },
+               },
+            )
+            .then((res) => {
+               localStorage.setItem('accessToken', res.data.accessToken);
+
+               history.push('/');
+            })
+            .catch((err) => console.log(err));
+      }
+   }, [otp]);
 
    const handleChange = (field, e) => {
       if (!isNaN(parseInt(e.target.value))) {
