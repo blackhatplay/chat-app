@@ -1,14 +1,14 @@
-export const CONTACTS = {
-   8383099735: {
-      name: 'Manoj Singh',
-   },
-   2541235875: {
-      name: 'Megha P',
-   },
-   2547513654: {
-      name: 'Rishab',
-   },
+export const DB_NAMES = {
+   contactDB: 'contactDB',
 };
+
+export const CONTACTS = [
+   {
+      name: 'Manoj Singh',
+      id: 'c1baec7a-7f9c-4e1d-9f56-dc014c95c84b',
+      mobile: '8383099735',
+   },
+];
 
 export const CONTACT_TYPES = {
    user: 'USER',
@@ -16,22 +16,16 @@ export const CONTACT_TYPES = {
 };
 export const RECENT_CONTACT = [
    {
-      id: '5d7e27e8-7f4f-43cc-b6b7-835702079228',
+      id: '6092af84-f9ea-448e-94d0-812b7d6c4054',
       type: CONTACT_TYPES.user,
-      mobile: '8383099735',
+      mobile: '8512088006',
       lastMsgTime: 1634323931563,
    },
    {
-      id: 'dff6deb8-cac4-400f-9c62-986675058b85',
+      id: 'c1baec7a-7f9c-4e1d-9f56-dc014c95c84b',
       type: CONTACT_TYPES.user,
-      mobile: '2541235875',
+      mobile: '8383099735',
       lastMsgTime: 1634323949292,
-   },
-   {
-      id: '8a1852e4-18b8-40f9-9567-13c3d0eaec73',
-      type: CONTACT_TYPES.user,
-      mobile: '2547513654',
-      lastMsgTime: 1634323968781,
    },
 ];
 

@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router';
 import server from '../../api/server';
-import { Card, Otp } from './styles';
+import accessToken from '../../utils/accessToken';
+import { Otp, SignInCard } from './styles';
 
 const otpInputArr = ['field1', 'field2', 'field3', 'field4'];
 
 const Verification = ({ mobile }) => {
    const history = useHistory();
+   const { setAccessToken } = accessToken();
 
    const [otp, setOtp] = useState({
       field1: '',
@@ -44,7 +46,7 @@ const Verification = ({ mobile }) => {
                },
             )
             .then((res) => {
-               localStorage.setItem('accessToken', res.data.accessToken);
+               setAccessToken(res.data.accessToken);
 
                history.push('/');
             })
@@ -99,7 +101,7 @@ const Verification = ({ mobile }) => {
    };
 
    return (
-      <Card>
+      <SignInCard>
          <h3>Verification</h3>
          <form>
             <label htmlFor="mobile">
@@ -126,7 +128,7 @@ const Verification = ({ mobile }) => {
                Resend code
             </button>
          </form>
-      </Card>
+      </SignInCard>
    );
 };
 

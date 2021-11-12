@@ -1,38 +1,7 @@
 import styled from 'styled-components';
-import { Card } from '../../components/common/Card';
+import { Card } from '../common/Card';
 
-export const SignInWrapper = styled.div`
-   background: url('/images/background.webp') no-repeat center center/cover;
-   width: 100%;
-   height: 100vh;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-
-   color: ${({ theme }) => theme.colors.text};
-`;
-
-export const InnerWrapper = styled.div`
-   width: 100%;
-   height: 80vh;
-   display: flex;
-   align-items: flex-end;
-   padding: 1rem;
-`;
-
-export const Otp = styled.div`
-   display: flex;
-   gap: 1rem;
-   justify-content: space-evenly;
-
-   input {
-      width: 3rem !important;
-      height: 3rem;
-      text-align: center;
-   }
-`;
-
-export const SignInCard = styled(Card)`
+export const AddContactCard = styled(Card)`
    h3 {
       margin-bottom: 0.5rem;
    }
@@ -53,12 +22,20 @@ export const SignInCard = styled(Card)`
          font-weight: bold;
       }
 
+      .error {
+         color: ${({ theme }) => theme.colors.error};
+      }
+
       button {
          border: none;
          padding: 1rem;
          border-radius: 50px;
          background: ${({ theme }) => theme.colors.dark};
          color: ${({ theme }) => theme.colors.light};
+
+         :disabled {
+            background: ${({ theme }) => theme.colors.shadow};
+         }
       }
 
       .link {

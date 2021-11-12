@@ -11,6 +11,7 @@ export const theme = {
       light: '#F3F4F5',
       textSecondary: '#777',
       shadow: '#ccc',
+      error: '#dc3545',
    },
 };
 

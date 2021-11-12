@@ -72,3 +72,22 @@ export const MainChat = styled.div`
    background-color: ${({ theme }) => theme.colors.background};
    border-top-right-radius: 25px;
 `;
+
+export const AddButton = styled.button`
+   position: absolute;
+   bottom: 2rem;
+   right: 2rem;
+   width: 3rem;
+   height: 3rem;
+   border: none;
+   outline: none;
+   border-radius: 50%;
+   box-shadow: 0 2px 2px ${({ theme }) => theme.colors.shadow};
+   font-size: 1.5rem;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   color: ${({ theme }) => theme.colors.light};
+   background-image: ${({ theme }) =>
+      `linear-gradient(to bottom right, ${theme.colors.secondary},  ${theme.colors.primary})`};
+`;

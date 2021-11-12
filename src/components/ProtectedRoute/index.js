@@ -1,30 +1,21 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import accessToken from '../../utils/accessToken';
 
-const ProtectedRoute = ({ component: Component, ...rest }) => {
-   const token = localStorage.getItem('accessToken');
+const ProtectedRoute = ({ component: Component, children, ...rest }) => {
+   const { token } = accessToken();
 
-   return (
-      <Route
-         {...rest}
-         render={(props) => {
-            if (token) {
-               return <Component {...rest} {...props} />;
-            } else {
-               return (
-                  <Redirect
-                     to={{
-                        pathname: '/signin',
-                        state: {
-                           from: props.location,
-                        },
-                     }}
-                  />
-               );
-            }
-         }}
-      />
-   );
+   if (token) {
+      return <Route {...rest}>{children}</Route>;
+   } else {
+      return (
+         <Redirect
+            to={{
+               pathname: '/signin',
+            }}
+         />
+      );
+   }
 };
 
 export default ProtectedRoute;

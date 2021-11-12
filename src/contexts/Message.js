@@ -11,12 +11,7 @@ PouchDB.plugin(PouchDBFind);
 const messageDB = new PouchDB('messageDB');
 const outgoingDB = new PouchDB('outgoingDB');
 
-const socket = io(process.env.REACT_APP_SOCKET_ENDPOINT, {
-   reconnectionDelayMax: 10000,
-   query: {
-      auth: localStorage.getItem('accessToken'),
-   },
-});
+let socket;
 
 export const MessageContext = React.createContext();
 
@@ -27,6 +22,16 @@ const MessageContextProvider = ({ children }) => {
    const [refreshMessage, setRefreshMessage] = useState(true);
    const [refreshOutgoingMessage, setRefreshOutgoingMessage] = useState(true);
    const { updateRecent } = useContext(RecentContactsContext);
+
+   useEffect(() => {
+      socket = io(process.env.REACT_APP_SOCKET_ENDPOINT, {
+         reconnectionDelayMax: 10000,
+         query: {
+            auth: localStorage.getItem('accessToken'),
+         },
+      });
+   }, []);
+
    const sendMessage = async (messageData) => {
       const newMessage = {
          ...messageData,
@@ -53,6 +58,7 @@ const MessageContextProvider = ({ children }) => {
    };
 
    const saveMessageToDB = (message) => {
+      console.log('incomming', message);
       messageDB.post({ ...message, _id: message.id }, function callback(err, result) {
          if (err && err.name !== 'conflict') {
             return console.log(err);
@@ -106,24 +112,24 @@ const MessageContextProvider = ({ children }) => {
       });
    }, []);
 
-   const getMessageById = () => {
-      messageDB
-         .createIndex({
+   const getMessageById = async () => {
+      try {
+         await messageDB.createIndex({
             index: { fields: ['timestamp', 'chatID'] },
-         })
-         .then(() => {
-            return messageDB.find({
-               selector: {
-                  chatID: selectedChat,
-                  timestamp: { $gte: null },
-               },
-               sort: [{ timestamp: 'desc' }],
-            });
-         })
-         .then((data) => {
-            setMessages(data.docs);
-         })
-         .catch((err) => console.log(err));
+         });
+
+         const data = await messageDB.find({
+            selector: {
+               chatID: selectedChat,
+               timestamp: { $gte: null },
+            },
+            sort: [{ timestamp: 'desc' }],
+         });
+
+         setMessages(data.docs);
+      } catch (error) {
+         console.log(error);
+      }
    };
 
    const getOutgoingMessageById = async () => {

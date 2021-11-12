@@ -31,9 +31,8 @@ const RecentContacts = ({ children }) => {
          console.log(res);
          if (res.docs.length === 0) {
             await recentContactDB.post(newRecentUpdate);
-
-            refreshRecent();
          }
+         refreshRecent();
       } catch (error) {
          console.log(error);
       }
@@ -104,13 +103,6 @@ const RecentContacts = ({ children }) => {
                setRecentContacts(data.docs);
             })
             .catch((error) => console.log(error));
-
-         recentContactDB
-            .allDocs({ include_docs: true, descending: true })
-            .then((data) => {
-               console.log(data);
-            })
-            .catch((err) => console.log(err));
       }
    }, [refresh]);
 

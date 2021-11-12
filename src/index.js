@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import RecentContactsProvider from './contexts/RecentContacts';
-import MessageContextProvider from './contexts/Message';
+import ContactContextProvider from './contexts/Contact';
+// import './contexts/importdata';
 
 const params = new URL(window.location).searchParams;
 const to = params.get('to');
@@ -14,11 +15,11 @@ window.localStorage.setItem('id', id);
 
 ReactDOM.render(
    <React.StrictMode>
-      <RecentContactsProvider>
-         <MessageContextProvider>
+      <ContactContextProvider>
+         <RecentContactsProvider>
             <App />
-         </MessageContextProvider>
-      </RecentContactsProvider>
+         </RecentContactsProvider>
+      </ContactContextProvider>
    </React.StrictMode>,
    document.getElementById('root'),
 );

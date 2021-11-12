@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import server from '../../api/server';
-import { Card, InnerWrapper, SignInWrapper } from './styles';
+import accessToken from '../../utils/accessToken';
+import { InnerWrapper, SignInCard, SignInWrapper } from './styles';
 import Verification from './Verification';
 
 const SignIn = () => {
@@ -9,7 +10,7 @@ const SignIn = () => {
    const [verificationScreen, setVerificationScreen] = useState(false);
 
    const history = useHistory();
-   const token = localStorage.getItem('accessToken');
+   const { token } = accessToken();
 
    if (token) {
       history.push('/');
@@ -43,7 +44,7 @@ const SignIn = () => {
             {verificationScreen ? (
                <Verification mobile={mobile} />
             ) : (
-               <Card>
+               <SignInCard>
                   <h3>Sign in</h3>
                   <form onSubmit={handleSubmit}>
                      <label htmlFor="mobile">
@@ -53,7 +54,7 @@ const SignIn = () => {
                      <small>If you continue, you agree to our terms and conditions</small>
                      <button>Continue</button>
                   </form>
-               </Card>
+               </SignInCard>
             )}
          </InnerWrapper>
       </SignInWrapper>

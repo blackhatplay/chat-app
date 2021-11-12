@@ -13,7 +13,9 @@ import {
 import { IoMdSend } from 'react-icons/io';
 import { MessageContext } from '../../contexts/Message';
 import { MESSAGE_TYPE } from '../../constants';
+
 const ChatBox = ({ match }) => {
+   console.log('chat');
    const { messages, selectedChat, setSelectedChat, sendMessage, outgoingMessages } = useContext(MessageContext);
    const [input, setInput] = useState('');
    const onMessage = (event) => {
